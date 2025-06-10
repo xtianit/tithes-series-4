@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tithes Series</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="quiz.css" />
+
+        <style>
+            /* Professional Engaging Spinner */
+            .tab-spinner {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 100%;
+                position: relative;
+            }
+
+            /* Hide the original Font Awesome icon */
+            .tab-spinner i {
+                display: none;
+            }
+
+            /* Main spinner ring */
+            .tab-spinner::before {
+                content: "";
+                position: absolute;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.1);
+                border-top: 3px solid #4a6da7;
+                border-right: 3px solid #4a6da7;
+                box-shadow: 0 0 15px rgba(74, 109, 167, 0.1);
+                animation: spinClockwise 1.2s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            /* Inner spinner ring */
+            .tab-spinner::after {
+                content: "";
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 3px solid rgba(74, 109, 167, 0.05);
+                border-bottom: 3px solid #4a6da7;
+                border-left: 3px solid #4a6da7;
+                animation: spinCounterClockwise 1.8s
+                    cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            }
+
+            /* Create the pulse effect */
+            @keyframes spinClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(180deg) scale(1.1);
+                    border-top-color: #5b7fbf;
+                    border-right-color: #5b7fbf;
+                    box-shadow: 0 0 20px rgba(74, 109, 167, 0.4);
+                }
+                100% {
+                    transform: rotate(360deg) scale(1);
+                }
+            }
+
+            @keyframes spinCounterClockwise {
+                0% {
+                    transform: rotate(0deg) scale(1);
+                }
+                50% {
+                    transform: rotate(-180deg) scale(1.15);
+                    border-bottom-color: #5b7fbf;
+                    border-left-color: #5b7fbf;
+                }
+                100% {
+                    transform: rotate(-360deg) scale(1);
+                }
+            }
+
+            /* Add a subtle pulsating dot in the center */
+            .tab-spinner .center-dot {
+                position: absolute;
+                width: 12px;
+                height: 12px;
+                background-color: #4a6da7;
+                border-radius: 50%;
+                animation: pulseDot 1.5s ease-in-out infinite;
+            }
+
+            @keyframes pulseDot {
+                0%,
+                100% {
+                    transform: scale(0.7);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                    box-shadow: 0 0 10px rgba(74, 109, 167, 0.6);
+                }
+            }
+
+            /* Keep your existing fade transition */
+            .tab-content {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            .tab-content.active {
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Loading Screen -->
+        <div class="loader-container">
+            <div class="loader-logo">
+                <img src="./logo.png" alt="Sunday School Logo" />
+                <div class="pulse"></div>
+            </div>
+            <div class="ministry-name">Life Gate Ministries Worldwide</div>
+            <div class="loader-text">Loading Sunday School Lesson</div>
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="inner-logo-container">
+            <img src="./logo.png" alt="Sunday School Logo" class="logo" />
+        </div>
+
+        <button
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            aria-label="Toggle theme"
+            style="z-index: 99999"
+        >
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="container">
+            <h1>SUNDAY SCHOOL LESSON</h1>
+            <h2>DATE: <span>JUNE I5, 2025</span></h2>
+            <h2>TITHING PART FOUR - EXAMPLES OF TITHE PAYERS</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="lessonProgress"></div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('intro')">
+                    Introduction
+                </button>
+                <button class="tab-btn" onclick="openTab('lesson')">
+                    Lesson
+                </button>
+
+                <button class="tab-btn" onclick="openTab('conclusion')">
+                    Conclusion
+                </button>
+                <button class="tab-btn" onclick="openTab('application')">
+                    Application
+                </button>
+
+                <button class="tab-btn" onclick="openTab('quiz')">Quiz</button>
+                <button class="tab-btn" onclick="openTab('prayer')">
+                    Prayer Points
+                </button>
+            </div>
+
+            <div id="tab-spinner" class="tab-spinner" style="display: none">
+                <i class="fas fa-spinner fa-spin"></i>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="intro" class="tab-content active">
+                <div class="memory-verse">
+                    <h2>🧠📝 Memory Verse</h2>
+                    <blockquote>
+                        "For with what judgment ye judge, ye shall be judged:
+                        and with what measure ye
+                        <em
+                            ><b
+                                ><span onclick="showBibleVersions('Mete')"
+                                    >mete</span
+                                ></b
+                            ></em
+                        >, it shall be measured to you again." - Matthew 7:2
+                        ⚖️📏🔁🪞⚠️
+                        <br />
+                        <button
+                            onclick="showBibleVersions('Matthew 7:2')"
+                            class="verse-btn"
+                        >
+                            Read in Different Versions
+                        </button>
+                    </blockquote>
+                </div>
+                <h2>Text: Genesis 14:18-20</h2>
+                <blockquote>
+                    <button
+                        onclick="showBibleVersions('Genesis 14:18-20')"
+                        class="verse-btn"
+                    >
+                        Read in Different Versions
+                    </button>
+                </blockquote>
+
+                <h2>Introduction 🧠✨📖</h2>
+                <p>
+                    A greater number of the world's population is a
+                    <span onclick="showBibleVersions('victim')"
+                        ><b><em>victim of conviction</em></b></span
+                    >
+                    through the examples of the past and
+                    <span onclick="showBibleVersions('unknown')"
+                        ><b
+                            ><em>only a few people dare the unknown</em></b
+                        ></span
+                    >. Almost everyone wants to know if others have done it,
+                    seen it or aggrees with it and until that is ascertained
+                    they won't be involved. This lesson will show some examples
+                    of tithe payers in the Bible which may enable us to comply
+                    with this divine demand.
+                </p>
+
+                <div class="aims-objectives">
+                    <h3>Aims and Objectives 🎯📖💡</h3>
+                    <p>
+                        <strong>Aim:</strong> To clear the doubts in the minds
+                        of God's children as to whether the step to pay tithes
+                        is reasonable. 💭🕊️📖💰🤔
+                    </p>
+
+                    <p>
+                        <strong>Objective:</strong> Our desire is to see the
+                        Christian believers faithfully paying tithes of all unto
+                        God . 🙏💰🌱
+                    </p>
+                </div>
+            </div>
+
+            <div id="lesson" class="tab-content">
+                <h2>Text Review/Lesson 📚✨</h2>
+                <div class="main-text">
+                    <h3>Text: Genesis 14:18-20 🕊️</h3>
+                    <button
+                        onclick="showBibleVersions('Genesis 14:18-20')"
+                        class="verse-btn"
+                    >
+                        📖 Read Genesis 14:18-20
+                    </button>
+                </div>
+
+                <div class="lesson-section">
+                    <h3>Lesson 🧠💡</h3>
+                    <p>
+                        We have quite a number of withesses in the Bible who
+                        gave their tithes to God on various occassions. The text
+                        also reveals one of such examples whom God blessed
+                        before and after tithing. Let us consider few examples
+                        from the Bible.
+                    </p>
+
+                    <ol class="scripture-list">
+                        <li>
+                            <p onclick="showBibleVersions('Abraham')">
+                                Abraham - Genesis 14:20
+                            </p>
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Genesis 14:20')"
+                                    class="verse-btn"
+                                >
+                                    📖 Genesis 14:20
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <p onclick="showBibleVersions('Jacob')">
+                                Jacob - Genesis 28:22
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Genesis 28:22')"
+                                    class="verse-btn"
+                                >
+                                    📖 Genesis 28:22
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <p onclick="showBibleVersions('Levi')">
+                                Levi who paid through Abraham - Hebrews 7:9
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Hebrews 7:9')"
+                                    class="verse-btn"
+                                >
+                                    📖 Hebrews 7:9
+                                </button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <p onclick="showBibleVersions('Hezekiah')">
+                                Hezekiah and Israel - 2 Chronicles 31:4-7
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('2 Chronicles 31:4-7')"
+                                    class="verse-btn"
+                                >
+                                    📖 2 Chronicles 31:4-7
+                                </button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <p onclick="showBibleVersions('Nehemiah')">
+                                Nehemiah and Israel - Nehemiah 13:9-13
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Nehemiah 13:9-13')"
+                                    class="verse-btn"
+                                >
+                                    📖 Nehemiah 13:9-13
+                                </button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <p onclick="showBibleVersions('Pharisees')">
+                                Pharisees - Matthew 23:23
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Matthew 23:23')"
+                                    class="verse-btn"
+                                >
+                                    📖 Matthew 23:23
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <p onclick="showBibleVersions('Early_Christians')">
+                                Early Christians - 1 Corinthians 9:9-14, 1
+                                Timothy 5:17-18, Galatians 6:6
+                            </p>
+
+                            <div class="verse-buttons">
+                                <button
+                                    onclick="showBibleVersions('Matthew 23:23')"
+                                    class="verse-btn"
+                                >
+                                    📖 Matthew 23:23
+                                </button>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div id="application" class="tab-content">
+                <h2>🙏 Personal Application – Examples of Tithe Payers</h2>
+                <div class="reflection-section">
+                    <div class="interactive-cards">
+                        <!-- Understanding Check -->
+                        <div class="reflection-card">
+                            <h3>📊 Understanding Biblical Examples</h3>
+                            <div class="love-meter">
+                                <p>
+                                    How well do you understand the examples of
+                                    tithe payers we studied?
+                                </p>
+                                <div class="rating-container">
+                                    <input
+                                        type="range"
+                                        min="1"
+                                        max="10"
+                                        value="5"
+                                        class="love-slider"
+                                        id="titheRating"
+                                    />
+                                    <span class="rating-value">5/10</span>
+                                </div>
+                                <div class="rating-feedback"></div>
+                            </div>
+                        </div>
+
+                        <!-- Action Plan -->
+                        <div class="reflection-card">
+                            <h3>📝 Following Biblical Examples Action Plan</h3>
+                            <div class="action-items">
+                                <div class="action-item">
+                                    <input type="checkbox" id="action1" />
+                                    <label for="action1">
+                                        📖 Study Abraham's example of tithing to
+                                        Melchizedek
+                                    </label>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action2" />
+                                    <label for="action2">
+                                        🙏 Learn from Jacob's vow to tithe
+                                    </label>
+                                </div>
+                                <div class="action-item">
+                                    <input type="checkbox" id="action3" />
+                                    <label for="action3">
+                                        ⚖️ Consider the Levites' role in tithing
+                                    </label>
+                                </div>
+                                <button class="add-action-btn">
+                                    ➕ Add Personal Action
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reflection Journal -->
+                    <div class="reflection-journal">
+                        <h3>📔 Reflection Journal</h3>
+                        <div class="journal-prompts">
+                            <div class="prompt active">
+                                <p>
+                                    💭 Which biblical example of tithing
+                                    inspires you most and why?
+                                </p>
+                                <textarea
+                                    class="reflection-input"
+                                    placeholder="Write your thoughts here..."
+                                ></textarea>
+                            </div>
+                            <div class="prompt-nav">
+                                <button class="prev-prompt" disabled>
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <span class="prompt-counter">1/3</span>
+                                <button class="next-prompt">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commitment Section -->
+                    <div class="commitment-section">
+                        <h3>🤲 Personal Commitment</h3>
+                        <div class="commitment-form">
+                            <p>
+                                Following these biblical examples, I commit to:
+                            </p>
+                            <input
+                                type="text"
+                                class="commitment-input"
+                                placeholder="e.g., Following Abraham's example of faithful tithing..."
+                            />
+                            <button class="save-commitment">
+                                📌 Make Commitment
+                            </button>
+                        </div>
+                        <div class="saved-commitments">
+                            <h4>📅 My Tithing Commitments</h4>
+                            <ul class="commitment-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="conclusion" class="tab-content">
+                <h2>Conclusion 📜</h2>
+                <p>
+                    The above examples are enough for us to know that we are
+                    neither making mistakes in paying tithes nor unwise. If you
+                    pay your tithes correctly, God also will bless you in full.
+                </p>
+            </div>
+
+            <link rel="stylesheet" href="theme.css" />
+            <div id="quiz" class="tab-content">
+                <h2>📚 Knowledge Check</h2>
+                <div class="quiz-container">
+                    <div id="quiz-questions">
+                        <div class="question">
+                            <p>
+                                1. Who was the first person recorded in the
+                                Bible to give tithes?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q1"
+                                        value="a"
+                                    />Abraham</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q1"
+                                        value="b"
+                                    />Jacob</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q1"
+                                        value="c"
+                                    />Levi</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>
+                                2. Which king restored proper tithing practices
+                                during his spiritual reforms?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q2"
+                                        value="a"
+                                    />Solomon</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q2"
+                                        value="b"
+                                    />Hezekiah</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q2"
+                                        value="c"
+                                    />David</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>
+                                3. Who received Abraham's tithe according to the
+                                lesson?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q3"
+                                        value="a"
+                                    />Aaron</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q3"
+                                        value="b"
+                                    />Levi</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q3"
+                                        value="c"
+                                    />Melchizedek</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>
+                                4. Which leader restored proper tithing after
+                                the Babylonian exile?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q4"
+                                        value="a"
+                                    />Ezra</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q4"
+                                        value="b"
+                                    />Daniel</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q4"
+                                        value="c"
+                                    />Nehemiah</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>
+                                5. According to Matthew 23:23, what did Jesus
+                                criticize the Pharisees for regarding tithing?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q5"
+                                        value="a"
+                                    />Neglecting justice, mercy and faith while
+                                    tithing herbs</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q5"
+                                        value="b"
+                                    />Not paying tithes</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q5"
+                                        value="c"
+                                    />Paying too much in tithes</label
+                                >
+                            </div>
+                        </div>
+
+                        <div class="question">
+                            <p>
+                                6. What did Jacob vow to give to God in Genesis
+                                28:22?
+                            </p>
+                            <div class="options">
+                                <label
+                                    ><input type="radio" name="q6" value="a" />A
+                                    tenth of all God would give him</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="q6"
+                                        value="b"
+                                    />His firstborn son</label
+                                >
+                                <label
+                                    ><input type="radio" name="q6" value="c" />A
+                                    sacrifice of animals</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="checkQuiz()" class="quiz-submit">
+                    📝 Submit Answers
+                </button>
+                <div id="quiz-results">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+
+            <link rel="stylesheet" href="prayer.css" />
+
+            <div id="prayer" class="tab-content">
+                <h2>Prayer Points</h2>
+
+                <div class="prayer-section">
+                    <div class="prayer-points">
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Thank You, Lord, for the examples of faithful
+                                tithe payers in the Bible. May their stories
+                                inspire us to honor You with our tithes.
+                            </div>
+                        </div>
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, let my mindset be transformed to
+                                understand the importance of tithing as a
+                                biblical principle, not just an obligation.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, I pray for grace to faithfully obey Your
+                                command to tithe, that I may walk in Your
+                                blessings rather than face Your discipline.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Father, following Jacob's example of commitment,
+                                give me the grace to faithfully honor You with a
+                                tenth of all You bless me with.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Holy Spirit, like Hezekiah who restored proper
+                                tithing practices, help me maintain consistency
+                                and integrity in my tithing commitment.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, inspire me through the examples of the
+                                early Christians who supported Your work, to
+                                give generously and willingly for the
+                                advancement of Your kingdom.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Father, help me follow these biblical examples
+                                of tithing with the right heart attitude,
+                                focusing not just on the act but also on
+                                justice, mercy and faithfulness.
+                            </div>
+                        </div>
+
+                        <div class="prayer-item">
+                            <div class="prayer-text">
+                                Lord, like Nehemiah who restored proper tithing
+                                after the exile, help me maintain faithful
+                                tithing practices and inspire others through my
+                                example.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add this modal for Bible versions -->
+            <div id="verse-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2 id="verse-reference"></h2>
+                    <div class="version-tab">
+                        <button
+                            class="version-btn active"
+                            onclick="showVersion('KJV')"
+                        >
+                            KJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NKJV')"
+                        >
+                            NKJV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NIV')"
+                        >
+                            NIV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('ESV')"
+                        >
+                            ESV
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('AMP')"
+                        >
+                            AMP
+                        </button>
+                        <button
+                            class="version-btn"
+                            onclick="showVersion('NLT')"
+                        >
+                            NLT
+                        </button>
+                    </div>
+                    <div id="verse-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Replace your existing font controls with this -->
+        <div class="font-controls">
+            <button
+                onclick="adjustFontSize(-1)"
+                aria-label="Decrease font size"
+            >
+                <i class="fas fa-minus"></i>
+            </button>
+            <span class="font-size">16px</span>
+            <button onclick="adjustFontSize(1)" aria-label="Increase font size">
+                <i class="fas fa-plus"></i>
+            </button>
+            <select
+                class="font-family-select"
+                onchange="changeFont(this.value)"
+            >
+                <option value="'Segoe UI', sans-serif">Default</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="Georgia, serif">Georgia</option>
+                <option value="'Times New Roman', serif">
+                    Times New Roman
+                </option>
+                <option value="'Comic Sans MS', cursive">Comic Sans</option>
+            </select>
+        </div>
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"
+        ></script>
+
+        <script>
+            $(function () {
+                let tab = $("tab");
+                tab.click(function () {
+                    alert;
+                });
+            });
+        </script>
+
+        <script>
+            // Loading Screen
+            window.addEventListener("load", function () {
+                setTimeout(() => {
+                    document.querySelector(".loader-container").style.display =
+                        "none";
+                }, 2000);
+            });
+
+            // // Tab Functionality
+            function openTab(tabName) {
+                const tabContents =
+                    document.getElementsByClassName("tab-content");
+                const tabButtons = document.getElementsByClassName("tab-btn");
+                const spinner = document.getElementById("tab-spinner");
+
+                for (let content of tabContents) {
+                    content.classList.remove("active");
+                    content.style.display = "none";
+                }
+
+                for (let button of tabButtons) {
+                    button.classList.remove("active");
+                }
+
+                document.getElementById(tabName).classList.add("active");
+                event.currentTarget.classList.add("active");
+
+                spinner.style.display = "flex";
+
+                setTimeout(() => {
+                    // Hide spinner
+                    spinner.style.display = "none";
+
+                    // Show selected tab content
+                    const selectedTab = document.getElementById(tabName);
+                    selectedTab.style.display = "block";
+
+                    // Trigger a reflow before adding the active class for animation
+                    void selectedTab.offsetWidth;
+
+                    // Add active class to fade in the content
+                    selectedTab.classList.add("active");
+
+                    // Update progress if needed
+                    updateProgress();
+                }, 800); // Adjust loading time as needed (800ms)
+            }
+
+            // Theme Toggle
+
+            function toggleTheme() {
+                document.body.classList.toggle("dark-mode");
+                const icon = document.querySelector(".theme-toggle i");
+                icon.classList.toggle("fa-moon");
+                icon.classList.toggle("fa-sun");
+            }
+
+            // Add these functions to your existing JavaScript
+
+            function showBibleVersions(reference) {
+                const modal = document.getElementById("verse-modal");
+                const verseRef = document.getElementById("verse-reference");
+                verseRef.textContent = reference;
+                modal.style.display = "block";
+                document.body.classList.add("modal-open");
+                showVersion(preferredVersion);
+            }
+
+            const bibleVerses = {
+                "Matthew 7:2": {
+                    KJV: `2 For with what judgment ye judge, ye shall be judged: and with what measure ye mete, it shall be measured to you again.`,
+
+                    NKJV: `2 For with what judgment you judge, you will be judged; and with the measure you use, it will be measured back to you.`,
+
+                    NIV: `2 For in the same way you judge others, you will be judged, and with the measure you use, it will be measured to you.`,
+
+                    ESV: `2 For with the judgment you pronounce you will be judged, and with the measure you use it will be measured to you.`,
+
+                    AMP: `2 For just as you [hypocritically] judge others when you are sinful and unrepentant, so will you be judged; and in accordance with your standard of measure [used to pass out judgment], judgment will be measured to you.`,
+
+                    NLT: `2 For you will be treated as you treat others. The standard you use in judging is the standard by which you will be judged.`,
+                },
+
+                "Genesis 14:18-20": {
+                    KJV: `18 And Melchizedek king of Salem brought forth bread and wine: and he was the priest of the most high God.
+            19 And he blessed him, and said, Blessed be Abram of the most high God, possessor of heaven and earth:
+            20 And blessed be the most high God, which hath delivered thine enemies into thy hand. And he gave him tithes of all.`,
+
+                    NKJV: `18 Then Melchizedek king of Salem brought out bread and wine; he was the priest of God Most High.
+            19 And he blessed him and said: “Blessed be Abram of God Most High, Possessor of heaven and earth;
+            20 And blessed be God Most High, Who has delivered your enemies into your hand.” And he gave him a tithe of all.`,
+
+                    NIV: `18 Then Melchizedek king of Salem brought out bread and wine. He was priest of God Most High,
+            19 and he blessed Abram, saying, “Blessed be Abram by God Most High, Creator of heaven and earth.
+            20 And praise be to God Most High, who delivered your enemies into your hand.” Then Abram gave him a tenth of everything.`,
+
+                    ESV: `18 And Melchizedek king of Salem brought out bread and wine. (He was priest of God Most High.)
+            19 And he blessed him and said, “Blessed be Abram by God Most High, Possessor of heaven and earth;
+            20 and blessed be God Most High, who has delivered your enemies into your hand!” And Abram gave him a tenth of everything.`,
+
+                    AMP: `18 Melchizedek king of Salem (Jerusalem) brought out bread and wine [for their nourishment]; he was the priest of God Most High.
+            19 And Melchizedek blessed Abram and said, “Blessed (joyful, favored) be Abram by God Most High, Creator and Possessor of heaven and earth;
+            20 And blessed, praised, and glorified be God Most High, Who has given your enemies into your hand.” And Abram gave him a tenth of all [the treasure he had taken in battle].`,
+
+                    NLT: `18 And Melchizedek, the king of Salem and a priest of God Most High, brought Abram some bread and wine.
+            19 Melchizedek blessed Abram with this blessing: “Blessed be Abram by God Most High, Creator of heaven and earth.
+            20 And blessed be God Most High, who has defeated your enemies for you.” Then Abram gave Melchizedek a tenth of all the goods he had recovered.`,
+                },
+
+                "Numbers 18:21-24": {
+                    KJV: `21 And, behold, I have given the children of Levi all the tenth in Israel for an inheritance, for their service which they serve, even the service of the tabernacle of the congregation.
+            22 Neither must the children of Israel henceforth come nigh the tabernacle of the congregation, lest they bear sin, and die.
+            23 But the Levites shall do the service of the tabernacle of the congregation, and they shall bear their iniquity: it shall be a statute forever throughout your generations, that among the children of Israel they have no inheritance.
+            24 But the tithes of the children of Israel, which they offer as an heave offering unto the Lord, I have given to the Levites to inherit: therefore I have said unto them, Among the children of Israel they shall have no inheritance.`,
+
+                    NKJV: `21 Behold, I have given the children of Levi all the tithes in Israel as an inheritance in return for the work which they perform, the work of the tabernacle of meeting.
+            22 Hereafter the children of Israel shall not come near the tabernacle of meeting, lest they bear sin and die.
+            23 But the Levites shall perform the work of the tabernacle of meeting, and they shall bear their iniquity; it shall be a statute forever throughout your generations, that among the children of Israel they shall have no inheritance.
+            24 For the tithes of the children of Israel, which they offer up as a heave offering to the Lord, I have given to the Levites as an inheritance; therefore I have said to them, ‘Among the children of Israel they shall have no inheritance.’`,
+
+                    NIV: `21 I give to the Levites all the tithes in Israel as their inheritance in return for the work they do while serving at the tent of meeting.
+            22 From now on the Israelites must not go near the tent of meeting, or they will bear the consequences of their sin and will die.
+            23 It is the Levites who are to do the work at the tent of meeting and bear the responsibility for any offenses they commit against it. This is a lasting ordinance for the generations to come. They will receive no inheritance among the Israelites.
+            24 Instead, I give to the Levites as their inheritance the tithes that the Israelites present as an offering to the Lord. That is why I said concerning them: ‘They will have no inheritance among the Israelites.’`,
+
+                    ESV: `21 To the Levites I have given every tithe in Israel for an inheritance, in return for their service that they do, their service in the tent of meeting,
+            22 so that the people of Israel do not come near the tent of meeting, lest they bear sin and die.
+            23 But the Levites shall do the service of the tent of meeting, and they shall bear their iniquity. It shall be a perpetual statute throughout your generations, and among the people of Israel they shall have no inheritance.
+            24 For the tithe of the people of Israel, which they present as a contribution to the Lord, I have given to the Levites for an inheritance; therefore I have said of them that they shall have no inheritance among the people of Israel.`,
+
+                    AMP: `21 Behold, I have given the Levites all the tithe in Israel as an inheritance in return for their service which they perform, the service of the Tent of Meeting (tabernacle).
+            22 The Israelites shall never again come near the Tent of Meeting (tabernacle), or they will incur sin and die.
+            23 Only the Levites shall perform the service of the Tent of Meeting, and they shall bear their iniquity; it shall be a perpetual statute throughout your generations. The Levites shall have no [land] inheritance among the children of Israel,
+            24 because I have given the tithe of the Israelites which they present as an offering to the Lord to the Levites as an inheritance; therefore I have said to them, ‘They shall have no [land] inheritance among the children of Israel.’`,
+
+                    NLT: `21 As for the tribe of Levi, your relatives, I will compensate them for their service in the Tabernacle instead of an allotment of land. I will give them the tithes from the entire land of Israel.
+            22 From now on, no Israelites, except the Levites, may approach the Tabernacle. If they come too near, they will be judged guilty and will die.
+            23 Only the Levites may serve at the Tabernacle, and they will be held responsible for any offenses against it. This is a permanent law for you, and it must be observed from generation to generation. The Levites will receive no allotment of land among the Israelites,
+            24 because I have given them the Israelites’ tithes, which have been presented as sacred offerings to the Lord. This will be the Levites’ share. That is why I said they would receive no allotment of land among the Israelites.`,
+                },
+
+                "Genesis 14:20": {
+                    KJV: `20 And blessed be the most high God, which hath delivered thine enemies into thy hand. And he gave him tithes of all.`,
+
+                    NKJV: `20 And blessed be God Most High, Who has delivered your enemies into your hand.” And he gave him a tithe of all.`,
+
+                    NIV: `20 And praise be to God Most High, who delivered your enemies into your hand.” Then Abram gave him a tenth of everything.`,
+
+                    ESV: `20 And blessed be God Most High, who has delivered your enemies into your hand!” And Abram gave him a tenth of everything.`,
+
+                    AMP: `20 And blessed, praised, and glorified be God Most High, Who has given your enemies into your hand.” And Abram gave him a tenth of all [the treasure he had taken in battle].`,
+
+                    NLT: `20 And blessed be God Most High, who has defeated your enemies for you.” Then Abram gave Melchizedek a tenth of all the goods he had recovered.`,
+                },
+                "Genesis 28:22": {
+                    KJV: `22 And this stone, which I have set for a pillar, shall be God’s house: and of all that thou shalt give me I will surely give the tenth unto thee.`,
+
+                    NKJV: `22 And this stone which I have set as a pillar shall be God’s house, and of all that You give me I will surely give a tenth to You.`,
+
+                    NIV: `22 And this stone that I have set up as a pillar will be God’s house, and of all that you give me I will give you a tenth.`,
+
+                    ESV: `22 And this stone, which I have set up for a pillar, shall be God’s house. And of all that you give me I will give a full tenth to you.`,
+
+                    AMP: `22 This stone which I have set up as a pillar (monument, memorial) shall be God’s house, and of everything that You give me I will give the tenth to You [as an offering to signify my gratitude and dependence on You].`,
+
+                    NLT: `22 And this memorial pillar I have set up will become a place for worshiping God, and I will present to God a tenth of everything he gives me.`,
+                },
+
+                "Hebrews 7:9": {
+                    KJV: `9 And as I may so say, Levi also, who receiveth tithes, paid tithes in Abraham.`,
+
+                    NKJV: `9 Even Levi, who receives tithes, paid tithes through Abraham, so to speak,`,
+
+                    NIV: `9 One might even say that Levi, who collects the tenth, paid the tenth through Abraham,`,
+
+                    ESV: `9 One might even say that Levi himself, who receives tithes, paid tithes through Abraham,`,
+
+                    AMP: `9 A person might even say that Levi, the father of the priestly tribe, himself paid tithes through Abraham [the father of all Israel, and all who believe],`,
+
+                    NLT: `9 In addition, we might even say that these Levites—the ones who collect the tithe—paid a tithe to Melchizedek when their ancestor Abraham paid a tithe to him.`,
+                },
+                "2 Chronicles 31:4-7": {
+                    KJV: `4 Moreover he commanded the people that dwelt in Jerusalem to give the portion of the priests and the Levites, that they might be encouraged in the law of the Lord.
+            5 And as soon as the commandment came abroad, the children of Israel brought in abundance the firstfruits of corn, wine, and oil, and honey, and of all the increase of the field; and the tithe of all things brought they in abundantly.
+            6 And concerning the children of Israel and Judah, that dwelt in the cities of Judah, they also brought in the tithe of oxen and sheep, and the tithe of holy things which were consecrated unto the Lord their God, and laid them by heaps.
+            7 In the third month they began to lay the foundation of the heaps, and finished them in the seventh month.`,
+
+                    NKJV: `4 Moreover he commanded the people who dwelt in Jerusalem to contribute support for the priests and the Levites, that they might devote themselves to the Law of the Lord.
+            5 As soon as the commandment was circulated, the children of Israel brought in abundance the firstfruits of grain and wine, oil and honey, and of all the produce of the field; and they brought in abundantly the tithe of everything.
+            6 And the children of Israel and Judah, who dwelt in the cities of Judah, brought the tithe of oxen and sheep; also the tithe of holy things which were consecrated to the Lord their God they laid in heaps.
+            7 In the third month they began laying them in heaps, and they finished in the seventh month.`,
+
+                    NIV: `4 He ordered the people living in Jerusalem to give the portion due the priests and Levites so they could devote themselves to the Law of the Lord.
+            5 As soon as the order went out, the Israelites generously gave the firstfruits of their grain, new wine, olive oil and honey and all that the fields produced. They brought a great amount, a tithe of everything.
+            6 The people of Israel and Judah who lived in the towns of Judah also brought a tithe of their herds and flocks and a tithe of the holy things dedicated to the Lord their God, and they piled them in heaps.
+            7 They began doing this in the third month and finished in the seventh month.`,
+
+                    ESV: `4 And he commanded the people who lived in Jerusalem to give the portion due to the priests and the Levites, that they might give themselves to the Law of the Lord.
+            5 As soon as the command was spread abroad, the people of Israel gave in abundance the firstfruits of grain, wine, oil, honey, and of all the produce of the field. And they brought in abundantly the tithe of everything.
+            6 And the people of Israel and Judah, who lived in the cities of Judah, also brought in the tithe of cattle and sheep, and the tithe of the dedicated things that had been dedicated to the Lord their God, and laid them in heaps.
+            7 In the third month they began to pile up the heaps, and finished them in the seventh month.`,
+
+                    AMP: `4 He commanded the people who lived in Jerusalem to give the portion due to the priests and Levites, so that they might devote themselves to the Law of the Lord.
+            5 As soon as the command spread, the Israelites gave in abundance the first fruits of grain, new wine, oil, honey, and of all the produce of the field; and they brought in the tithe of everything abundantly.
+            6 The sons of Israel and Judah, who lived in the cities of Judah, also brought in the tithe of oxen and sheep and the tithe of sacred things which were consecrated to the Lord their God, and placed them in heaps.
+            7 In the third month they began to lay the foundation of the heaps, and finished them in the seventh month.`,
+
+                    NLT: `4 In addition, he required the people in Jerusalem to bring a portion of their goods to the priests and Levites so they could devote themselves fully to the Law of the Lord.
+            5 When the people of Israel heard these requirements, they responded generously by bringing the first share of their grain, new wine, olive oil, honey, and all the produce of their fields. They brought a large quantity—a tithe of all they produced.
+            6 The people who had moved to Judah from Israel, and the people of Judah themselves, brought in the tithes of their cattle, sheep, and goats and the tithe of the things that had been dedicated to the Lord their God, and they piled them up in great heaps.
+            7 They began piling them up in late spring, and the heaps continued to grow until early autumn.`,
+                },
+                "Nehemiah 13:9-13": {
+                    KJV: `9 Then I commanded, and they cleansed the chambers: and thither brought I again the vessels of the house of God, with the meat offering and the frankincense.
+            10 And I perceived that the portions of the Levites had not been given them: for the Levites and the singers, that did the work, were fled every one to his field.
+            11 Then contended I with the rulers, and said, Why is the house of God forsaken? And I gathered them together, and set them in their place.
+            12 Then brought all Judah the tithe of the corn and the new wine and the oil unto the treasuries.
+            13 And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren.`,
+
+                    NKJV: `9 Then I gave a command, and they cleansed the rooms; and I brought back into them the articles of the house of God, with the grain offering and the frankincense.
+            10 I also realized that the portions for the Levites had not been given them; for each of the Levites and the singers who did the work had gone back to his field.
+            11 So I contended with the rulers, and said, “Why is the house of God forsaken?” And I gathered them together and set them in their place.
+            12 Then all Judah brought the tithe of the grain and the new wine and the oil to the storehouse.
+            13 And I appointed as treasurers over the storehouse Shelemiah the priest and Zadok the scribe, and of the Levites, Pedaiah; and next to them was Hanan the son of Zaccur, the son of Mattaniah; for they were considered faithful, and their task was to distribute to their brethren.`,
+
+                    NIV: `9 I gave orders to purify the rooms, and then I put back into them the equipment of the house of God, with the grain offerings and the incense.
+            10 I also learned that the portions assigned to the Levites had not been given to them, and that all the Levites and musicians responsible for the service had gone back to their own fields.
+            11 So I rebuked the officials and asked them, “Why is the house of God neglected?” Then I called them together and stationed them at their posts.
+            12 All Judah brought the tithes of grain, new wine and olive oil into the storerooms.
+            13 I put Shelemiah the priest, Zadok the scribe, and a Levite named Pedaiah in charge of the storerooms and made Hanan son of Zakkur, the son of Mattaniah, their assistant, because they were considered trustworthy. They were made responsible for distributing the supplies to their fellow Levites.`,
+
+                    ESV: `9 Then I gave orders, and they cleansed the chambers, and I brought back there the vessels of the house of God, with the grain offering and the frankincense.
+            10 I also found out that the portions of the Levites had not been given to them, so that the Levites and the singers, who did the work, had fled each to his field.
+            11 So I confronted the officials and said, “Why is the house of God forsaken?” And I gathered them together and set them in their stations.
+            12 Then all Judah brought the tithe of the grain, wine, and oil into the storehouses.
+            13 And I appointed as treasurers over the storehouses Shelemiah the priest, Zadok the scribe, and Pedaiah of the Levites, and as their assistant Hanan the son of Zaccur, son of Mattaniah, for they were considered reliable, and their duty was to distribute to their brothers.`,
+
+                    AMP: `9 Then I gave orders, and they cleansed the rooms; and I brought back the utensils of the house of God with the grain offerings and the frankincense.
+            10 I also discovered that the portions of the Levites had not been given to them, so the Levites and the singers who did the work [for the temple] had each gone back to his field.
+            11 Then I reprimanded the officials and said, “Why is the house of God neglected?” So I gathered the Levites and singers together and restored them at their posts.
+            12 Then all Judah brought the tithe of the grain, the new wine, and the oil to the storehouses.
+            13 I appointed treasurers over the storehouses: Shelemiah the priest, Zadok the scribe, and Pedaiah from the Levites, and next to them was Hanan the son of Zaccur, the son of Mattaniah, for they were considered faithful, and their task was to distribute supplies to their brothers.`,
+
+                    NLT: `9 Then I demanded that the rooms be purified, and I brought back the articles for God’s Temple, the grain offerings, and the frankincense.
+            10 I also discovered that the Levites had not been given their prescribed portions of food, so they and the singers who were to conduct the worship services had all returned to work their fields.
+            11 I immediately confronted the leaders and demanded, “Why has the Temple of God been neglected?” Then I called all the Levites back again and restored them to their proper duties.
+            12 And once more all the people of Judah began bringing their tithes of grain, new wine, and olive oil to the Temple storerooms.
+            13 I assigned supervisors for the storerooms: Shelemiah the priest, Zadok the scribe, and Pedaiah, one of the Levites. And I appointed Hanan son of Zaccur and grandson of Mattaniah as their assistant. These men had an excellent reputation, and it was their job to make honest distributions to their fellow Levites.`,
+                },
+                "1 Corinthians 9:9-14": {
+                    KJV: `9 For it is written in the law of Moses, Thou shalt not muzzle the mouth of the ox that treadeth out the corn.
+            10 Doth God take care for oxen? Or saith he it altogether for our sakes? For our sakes, no doubt, this is written: that he that ploweth should plow in hope; and that he that thresheth in hope should be partaker of his hope.
+            11 If we have sown unto you spiritual things, is it a great thing if we shall reap your carnal things?
+            12 If others be partakers of this power over you, are not we rather? Nevertheless we have not used this power; but suffer all things, lest we should hinder the gospel of Christ.
+            13 Do ye not know that they which minister about holy things live of the things of the temple? and they which wait at the altar are partakers with the altar?
+            14 Even so hath the Lord ordained that they which preach the gospel should live of the gospel.`,
+
+                    NKJV: `9 For it is written in the law of Moses, “You shall not muzzle an ox while it treads out the grain.” Is it oxen God is concerned about?
+            10 Or does He say it altogether for our sakes? For our sakes, no doubt, this is written, that he who plows should plow in hope, and he who threshes in hope should be partaker of his hope.
+            11 If we have sown spiritual things for you, is it a great thing if we reap your material things?
+            12 If others are partakers of this right over you, are we not even more? Nevertheless we have not used this right, but endure all things lest we hinder the gospel of Christ.
+            13 Do you not know that those who minister the holy things eat of the things of the temple, and those who serve at the altar partake of the offerings of the altar?
+            14 Even so the Lord has commanded that those who preach the gospel should live from the gospel.`,
+
+                    NIV: `9 For it is written in the Law of Moses: “Do not muzzle an ox while it is treading out the grain.” Is it about oxen that God is concerned?
+            10 Surely he says this for us, doesn’t he? Yes, this was written for us, because whoever plows and threshes should be able to do so in the hope of sharing in the harvest.
+            11 If we have sown spiritual seed among you, is it too much if we reap a material harvest from you?
+            12 If others have this right of support from you, shouldn’t we have it all the more? But we did not use this right. On the contrary, we put up with anything rather than hinder the gospel of Christ.
+            13 Don’t you know that those who serve in the temple get their food from the temple, and that those who serve at the altar share in what is offered on the altar?
+            14 In the same way, the Lord has commanded that those who preach the gospel should receive their living from the gospel.`,
+
+                    ESV: `9 For it is written in the Law of Moses, “You shall not muzzle an ox when it treads out the grain.” Is it for oxen that God is concerned?
+            10 Does he not certainly speak for our sake? It was written for our sake, because the plowman should plow in hope and the thresher thresh in hope of sharing in the crop.
+            11 If we have sown spiritual things among you, is it too much if we reap material things from you?
+            12 If others share this rightful claim on you, do not we even more? Nevertheless, we have not made use of this right, but we endure anything rather than put an obstacle in the way of the gospel of Christ.
+            13 Do you not know that those who are employed in the temple service get their food from the temple, and those who serve at the altar share in the sacrificial offerings?
+            14 In the same way, the Lord commanded that those who proclaim the gospel should get their living by the gospel.`,
+
+                    AMP: `9 For it is written in the Law of Moses, “YOU SHALL NOT MUZZLE AN OX WHILE IT IS TREADING OUT THE GRAIN [to keep it from eating the grain].” Is it [only] for oxen that God cares?
+            10 Or does He speak entirely for our sake? Yes, it was written for our sake: The plowman ought to plow in hope, and the thresher to thresh in hope of sharing the harvest.
+            11 If we have sown [the good seed of] spiritual things in you, is it too much if we reap material things from you?
+            12 If others share in this rightful claim over you, do not we even more? However, we did not exercise this right, but we put up with everything so that we will not hinder [the spread of] the good news of Christ.
+            13 Do you not know that those who officiate in the sacred services of the temple eat from the temple [offerings of meat and bread], and those who regularly attend the altar have their share from the altar?
+            14 So also [on the same principle] the Lord directed those who preach the gospel to get their living from the gospel.`,
+
+                    NLT: `9 For the law of Moses says, “You must not muzzle an ox to keep it from eating as it treads out the grain.” Was God thinking only about oxen when he said this?
+            10 Wasn’t he actually speaking to us? Yes, it was written for us, so that the one who plows and the one who threshes the grain might both expect a share of the harvest.
+            11 Since we have planted spiritual seed among you, aren’t we entitled to a harvest of physical food and drink?
+            12 If you support others who preach to you, shouldn’t we have an even greater right to be supported? But we have never used this right. We would rather put up with anything than be an obstacle to the Good News about Christ.
+            13 Don’t you realize that those who work in the temple get their meals from the offerings brought to the temple? And those who serve at the altar get a share of the sacrificial offerings.
+            14 In the same way, the Lord ordered that those who preach the Good News should be supported by those who benefit from it.`,
+                },
+                "Matthew 23:23": {
+                    KJV: `23 Woe unto you, scribes and Pharisees, hypocrites! for ye pay tithe of mint and anise and cummin, and have omitted the weightier matters of the law, judgment, mercy, and faith: these ought ye to have done, and not to leave the other undone.`,
+
+                    NKJV: `23 Woe to you, scribes and Pharisees, hypocrites! For you pay tithe of mint and anise and cummin, and have neglected the weightier matters of the law: justice and mercy and faith. These you ought to have done, without leaving the others undone.`,
+
+                    NIV: `23 Woe to you, teachers of the law and Pharisees, you hypocrites! You give a tenth of your spices—mint, dill and cumin. But you have neglected the more important matters of the law—justice, mercy and faithfulness. You should have practiced the latter, without neglecting the former.`,
+
+                    ESV: `23 Woe to you, scribes and Pharisees, hypocrites! For you tithe mint and dill and cumin, and have neglected the weightier matters of the law: justice and mercy and faithfulness. These you ought to have done, without neglecting the others.`,
+
+                    AMP: `23 Woe to you, scribes and Pharisees, hypocrites! For you give tithes of mint and dill and cummin, and have neglected the weightier provisions of the law: justice and mercy and faithfulness; but these are the things you should have done without neglecting the others.`,
+
+                    NLT: `23 What sorrow awaits you teachers of religious law and you Pharisees. Hypocrites! For you are careful to tithe even the tiniest income from your herb gardens, but you ignore the more important aspects of the law—justice, mercy, and faith. You should tithe, yes, but do not neglect the more important things.`,
+                },
+                "1 Timothy 5:17-18": {
+                    KJV: `17 Let the elders that rule well be counted worthy of double honour, especially they who labour in the word and doctrine.
+                            18 For the scripture saith, thou shalt not muzzle the ox that treadeth out the corn. And, The labourer is worthy of his reward.`,
+
+                    NKJV: `17 Let the elders who rule well be counted worthy of double honor, especially those who labor in the word and doctrine.
+                            18 For the Scripture says, "You shall not muzzle an ox while it treads out the grain," and, "The laborer is worthy of his wages."`,
+
+                    NIV: `17 The elders who direct the affairs of the church well are worthy of double honor, especially those whose work is preaching and teaching.
+                            18 For Scripture says, "Do not muzzle an ox while it is treading out the grain," and "The worker deserves his wages."`,
+
+                    ESV: `17 Let the elders who rule well be considered worthy of double honor, especially those who labor in preaching and teaching.
+                            18 For the Scripture says, "You shall not muzzle an ox when it treads out the grain," and, "The laborer deserves his wages."`,
+
+                    AMP: `17 The elders who perform their leadership duties well are to be considered worthy of double honor (financial support), especially those who work hard at preaching and teaching [the word of God concerning eternal salvation through Christ].
+                            18 For the Scripture says, "YOU SHALL NOT MUZZLE THE OX while it is treading out the grain [to prevent it from eating]," and, "The worker is worthy of his wages [he deserves fair compensation]."`,
+
+                    NLT: `17 Elders who do their work well should be respected and paid well, especially those who work hard at both preaching and teaching.
+                            18 For the Scripture says, "You must not muzzle an ox to keep it from eating as it treads out the grain." And in another place, "Those who work deserve their pay!"`,
+                },
+                "Galatians 6:6": {
+                    KJV: `6 Let him that is taught in the word communicate unto him that teacheth in all good things.`,
+
+                    NKJV: `6 Let him who is taught the word share in all good things with him who teaches.`,
+
+                    NIV: `6 Nevertheless, the one who receives instruction in the word should share all good things with their instructor.`,
+
+                    ESV: `6 Let the one who is taught the word share all good things with the one who teaches.`,
+
+                    AMP: `6 The one who is taught the word [of God] is to share all good things with his teacher [contributing to his spiritual and material support].`,
+
+                    NLT: `6 Those who are taught the word of God should provide for their teachers, sharing all good things with them.`,
+                },
+                Mete: {
+                    KJV: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                    NKJV: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                    NIV: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                    ESV: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                    AMP: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                    NLT: "Mete means to measure out, to give, or to dispense — usually in the context of judgment, justice, or treatment. You get what you give. You reap what you sow. You are dispensed what you dispense. If you pay for 20 liters of petrol, you get 20 liters. If you pay for 10, you get 10. If you pay for 0, you get 0. If you give nothing, you receive nothing. Whatsoever a man sows, that shall he also reap. (Galatians 6:7)",
+                },
+                unknown: {
+                    KJV: "Lots of people fear to try new things. They fear the unknown. Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                    NKJV: "Lots of people fear to try new things. They fear the unknown. Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                    NIV: "Lots of people fear to try new things. They fear the unknown. Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                    ESV: "Lots of people fear to try new things. They fear the unknown. Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                    AMP: "Lots of people fear to try new things. They fear the unknown.  Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                    NLT: "Lots of people fear to try new things. They fear the unknown. Something that has not been heard about. Some conslude it a fraud because not one has heard about it before. But the unknown is where all the possibilities are. The unknown is where you find new opportunities, new experiences, and new blessings.",
+                },
+
+                victim: {
+                    KJV: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                    NKJV: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                    NIV: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                    ESV: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                    AMP: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                    NLT: "A person who requires proof or examples from others before taking action. They are limited by needing to see others succeed first before they will try something themselves. This mindset can prevent stepping out in faith and receiving God's blessings.",
+                },
+                Abraham: {
+                    KJV: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                    NKJV: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                    NIV: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                    ESV: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                    AMP: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                    NLT: `Abraham is the father of faith. He is the first person in the Bible to give a tithe. He gave a tenth of all he had to Melchizedek, the king of Salem and priest of God Most High, after rescuing his nephew Lot from captivity. This act of giving a tithe is seen as an example of faith and obedience to God.`,
+                },
+                Jacob: {
+                    KJV: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                    NKJV: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                    NIV: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                    ESV: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                    AMP: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                    NLT: `Jacob is the grandson of Abraham and the son of Isaac. He is known for his dream of a ladder reaching to heaven and for his covenant with God. After this encounter, Jacob vowed to give a tithe of all he had to God, marking a significant moment in his spiritual journey.`,
+                },
+                Levi: {
+                    KJV: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                    NKJV: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                    NIV: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                    ESV: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                    AMP: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                    NLT: `Levi is the third son of Jacob and Leah, and the ancestor of the Levites, who were set apart for religious duties. The Levites did not receive a land inheritance like the other tribes but were supported by the tithes of the other Israelites. This system ensured that the Levites could focus on their spiritual responsibilities without needing to farm or engage in other secular work.`,
+                },
+                Hezekiah: {
+                    KJV: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                    NKJV: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                    NIV: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                    ESV: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                    AMP: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                    NLT: `Hezekiah was a king of Judah who reigned during a time of spiritual revival. He restored the temple, reinstituted the Passover celebration, and encouraged the people to bring their tithes and offerings to support the temple and its services. His reforms included a renewed commitment to God's laws and a focus on proper worship.`,
+                },
+                Nehemiah: {
+                    KJV: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                    NKJV: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                    NIV: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                    ESV: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                    AMP: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                    NLT: `Nehemiah was a Jewish leader who played a crucial role in rebuilding Jerusalem's walls after the Babylonian exile. He emphasized the importance of tithing to support the temple and its workers, ensuring that the spiritual needs of the community were met. Nehemiah's leadership included reforms to restore proper worship and adherence to God's laws.`,
+                },
+                Pharisees: {
+                    KJV: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                    NKJV: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                    NIV: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                    ESV: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                    AMP: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                    NLT: `The Pharisees were a religious group in Jesus' time known for their strict adherence to the Law of Moses and oral traditions. They were often criticized by Jesus for their hypocrisy and legalism, focusing on minor details while neglecting the more important aspects of the law, such as justice, mercy, and faithfulness.`,
+                },
+                Early_Christians: {
+                    KJV: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                    NKJV: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                    NIV: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                    ESV: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                    AMP: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                    NLT: `The early Christians practiced communal living and shared their resources to support one another. They sold their possessions and distributed the proceeds to those in need, ensuring that no one among them was in want. This practice reflected their commitment to love and care for each other as part of the body of Christ.`,
+                },
+            };
+
+            // Replace the existing showVersion function
+
+            function showVersion(version) {
+                const reference =
+                    document.getElementById("verse-reference").textContent;
+                const verseText = document.getElementById("verse-text");
+
+                // Show loader
+                verseText.innerHTML =
+                    '<div class="verse-loader"><i class="fas fa-spinner fa-2x"></i></div>';
+
+                // Simulate loading time and show verse
+                setTimeout(() => {
+                    if (bibleVerses[reference]) {
+                        verseText.innerHTML = `<p class="verse-text">${bibleVerses[reference][version]}</p>`;
+                        // Add show class after a brief delay to trigger fade-in
+                        setTimeout(() => {
+                            document
+                                .querySelector(".verse-text")
+                                .classList.add("show");
+                        }, 50);
+                    } else {
+                        verseText.innerHTML =
+                            "<p>Verse not found in database.</p>";
+                    }
+
+                    // Update active button
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === version)
+                            btn.classList.add("active");
+                    });
+                }, 500); // Half second loading time
+            }
+
+            // Close modal when clicking the X or outside
+            document.querySelector(".close").onclick = function () {
+                document.getElementById("verse-modal").style.display = "none";
+                document.body.classList.remove("modal-open");
+            };
+
+            window.onclick = function (event) {
+                const modal = document.getElementById("verse-modal");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove("modal-open");
+                }
+            };
+
+            function checkQuiz() {
+                const answers = {
+                    q1: "a", // Malachi 3:10
+                    q2: "b", // Time of Melchizedek and Abraham
+                    q3: "c", // No, it predates the Law of Moses
+                    q4: "c", // Christ
+                    q5: "a", // Hebrews 7:6-8
+                    q6: "a", // To support Melchizedek's priesthood
+                };
+
+                let score = 0;
+                let total = Object.keys(answers).length;
+                let resultsHTML = "<h3>📊 Quiz Results</h3><ul>";
+
+                for (let key in answers) {
+                    const selected = document.querySelector(
+                        `input[name="${key}"]:checked`
+                    );
+                    if (selected) {
+                        if (selected.value === answers[key]) {
+                            score++;
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ✅ Correct</li>`;
+                        } else {
+                            resultsHTML += `<li>Question ${key.slice(
+                                1
+                            )}: ❌ Incorrect</li>`;
+                        }
+                    } else {
+                        resultsHTML += `<li>Question ${key.slice(
+                            1
+                        )}: ⚠️ Not answered</li>`;
+                    }
+                }
+
+                resultsHTML += `</ul>`;
+
+                // Calculate percentage and add appropriate styling
+                const percentage = Math.round((score / total) * 100);
+                let scoreClass = "";
+                let message = "";
+
+                if (percentage >= 80) {
+                    scoreClass = "score-excellent";
+                    message =
+                        "🎉 Excellent work! You have a strong understanding of biblical tithing.";
+                } else if (percentage >= 60) {
+                    scoreClass = "score-good";
+                    message =
+                        "👍 Good job! You have a solid foundation, but consider reviewing some concepts.";
+                } else {
+                    scoreClass = "score-needs-improvement";
+                    message =
+                        "📚 Keep studying! Review the lesson materials to strengthen your understanding.";
+                }
+
+                resultsHTML += `<div class="score-summary ${scoreClass}">
+                            <strong>Your Score: ${score} out of ${total} (${percentage}%)</strong>
+                            <br><br>${message}
+                        </div>`;
+
+                const resultsDiv = document.getElementById("quiz-results");
+                resultsDiv.innerHTML = resultsHTML;
+                resultsDiv.classList.add("show");
+                resultsDiv.scrollIntoView({ behavior: "smooth" });
+            }
+
+            let progress = 0;
+            const totalSections = 5; // Number of tabs
+
+            function updateProgress(increment = true) {
+                if (increment) {
+                    progress = Math.min(100, progress + 100 / totalSections);
+                }
+                const progressBar = document.querySelector(".progress");
+                const progressText = document.querySelector(".progress-text");
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.round(progress)}% Complete`;
+
+                if (progress >= 100) {
+                    showToast(
+                        "Congratulations! You've completed the lesson! 🎉"
+                    );
+                }
+            }
+
+            function showToast(message) {
+                const toast = document.createElement("div");
+                toast.className = "toast";
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                // Trigger reflow
+                toast.offsetHeight;
+
+                // Show toast
+                toast.style.opacity = "1";
+
+                // Hide after 3 seconds
+                setTimeout(() => {
+                    toast.style.opacity = "0";
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            // Add interaction tracking to tab switching
+            const originalOpenTab = openTab;
+            openTab = function (tabName) {
+                originalOpenTab(tabName);
+                updateProgress();
+
+                // Add animation to questions
+                if (tabName === "quiz") {
+                    document.querySelectorAll(".question").forEach((q, i) => {
+                        setTimeout(() => q.classList.add("show"), i * 200);
+                    });
+                }
+            };
+
+            // Save progress to localStorage
+            function saveProgress() {
+                localStorage.setItem("lessonProgress", progress);
+                showToast("Progress saved! 💾");
+            }
+
+            // Load saved progress
+            window.addEventListener("load", () => {
+                const savedProgress = localStorage.getItem("lessonProgress");
+                if (savedProgress) {
+                    progress = parseFloat(savedProgress);
+                    updateProgress(false);
+                }
+            });
+
+            // Share functionality
+            function shareLesson() {
+                if (navigator.share) {
+                    navigator
+                        .share({
+                            title: "Sunday School Lesson",
+                            text: "Check out this lesson on Real Christian Clothing!",
+                            url: window.location.href,
+                        })
+                        .then(() => showToast("Shared successfully! 🙌"))
+                        .catch(() => showToast("Sharing failed"));
+                } else {
+                    showToast("Sharing not supported on this device");
+                }
+            }
+
+            // Scroll to top
+            function scrollToTop() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            }
+
+            // Add to your existing JavaScript
+
+            let preferredVersion =
+                localStorage.getItem("preferredVersion") || "KJV";
+
+            function changeDefaultVersion(version) {
+                preferredVersion = version;
+                localStorage.setItem("preferredVersion", version);
+                showVersion(version);
+                showToast(`Default Bible version changed to ${version}`);
+            }
+
+            // Update the showBibleVersions function
+
+            // Load preferred version on startup
+            window.addEventListener("load", () => {
+                const savedVersion = localStorage.getItem("preferredVersion");
+                if (savedVersion) {
+                    preferredVersion = savedVersion;
+                    document.querySelectorAll(".version-btn").forEach((btn) => {
+                        btn.classList.remove("active");
+                        if (btn.textContent === preferredVersion)
+                            btn.classList.add("active");
+                    });
+                }
+            });
+
+            // Add this to your existing <script> section
+            let currentFontSize =
+                parseInt(localStorage.getItem("preferredFontSize")) || 16;
+
+            function adjustFontSize(delta) {
+                // Adjust font size with limits
+                currentFontSize = Math.min(
+                    Math.max(currentFontSize + delta, 12),
+                    24
+                );
+
+                // Update CSS variable
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+
+                // Update display
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Save to localStorage
+                localStorage.setItem("preferredFontSize", currentFontSize);
+            }
+
+            // Initialize font size on page load
+            window.addEventListener("load", () => {
+                // Set initial font size
+                document.documentElement.style.setProperty(
+                    "--font-size",
+                    `${currentFontSize}px`
+                );
+                document.querySelector(
+                    ".font-size"
+                ).textContent = `${currentFontSize}px`;
+
+                // Add scalable-text class to all text elements
+                document
+                    .querySelectorAll(
+                        "p, h1, h2, h3, h4, h5, h6, li, blockquote, label, button, input, textarea, .tab-btn, .verse-text, .options label"
+                    )
+                    .forEach((el) => el.classList.add("scalable-text"));
+            });
+
+            function changeFont(fontFamily) {
+                document.body.style.fontFamily = fontFamily;
+                // Save preference
+                localStorage.setItem("preferredFont", fontFamily);
+            }
+
+            // Load saved preferences
+            window.addEventListener("load", () => {
+                const savedFontSize = localStorage.getItem("preferredFontSize");
+                if (savedFontSize) {
+                    currentFontSize = parseInt(savedFontSize);
+                    adjustFontSize(0);
+                }
+
+                const savedFont = localStorage.getItem("preferredFont");
+                if (savedFont) {
+                    document.body.style.fontFamily = savedFont;
+                    document.querySelector(".font-family-select").value =
+                        savedFont;
+                }
+            });
+
+            // Add CSS Variable for scaling
+            document.documentElement.style.setProperty(
+                "--content-scale",
+                "100%"
+            );
+
+            // Update content elements to use the scale
+            document
+                .querySelectorAll(
+                    ".tab-content, .memory-verse, .reflection-notes"
+                )
+                .forEach((el) => {
+                    el.classList.add("adjustable-content");
+                    el.style.fontSize =
+                        "calc(1rem * var(--content-scale) / 100)";
+                });
+
+            // Add to your existing <script> section
+            document.addEventListener("DOMContentLoaded", () => {
+                // Love Meter functionality
+                const loveSlider = document.querySelector(".love-slider");
+                const ratingValue = document.querySelector(".rating-value");
+                const ratingFeedback =
+                    document.querySelector(".rating-feedback");
+
+                if (loveSlider) {
+                    loveSlider.addEventListener("input", () => {
+                        const value = loveSlider.value;
+                        ratingValue.textContent = `${value}/10`;
+
+                        // Update feedback based on rating
+                        const feedback =
+                            value >= 8
+                                ? "Excellent! Keep showing God's love!"
+                                : value >= 6
+                                ? "Good effort! There's room to grow."
+                                : "Consider ways to show more love tomorrow.";
+                        ratingFeedback.textContent = feedback;
+                    });
+                }
+
+                // Action Items functionality
+                const addActionBtn = document.querySelector(".add-action-btn");
+                if (addActionBtn) {
+                    addActionBtn.addEventListener("click", () => {
+                        const action = prompt("Enter your custom love action:");
+                        if (action) {
+                            const actionItems =
+                                document.querySelector(".action-items");
+                            const newAction = document.createElement("div");
+                            newAction.className = "action-item";
+                            newAction.innerHTML = `
+                                                                                <input type="checkbox" id="action${Date.now()}">
+                                                                                <label for="action${Date.now()}">${action}</label>
+                                                                            `;
+                            actionItems.insertBefore(newAction, addActionBtn);
+                        }
+                    });
+                }
+
+                // Journal Prompts functionality
+                const prompts = [
+                    "How did you demonstrate God's love today?",
+                    "What challenges did you face in showing love?",
+                    "How can you better express God's love tomorrow?",
+                ];
+                let currentPrompt = 0;
+
+                const updatePrompt = () => {
+                    const promptElement = document.querySelector(".prompt p");
+                    const promptCounter =
+                        document.querySelector(".prompt-counter");
+                    if (promptElement) {
+                        promptElement.textContent = prompts[currentPrompt];
+                        promptCounter.textContent = `${currentPrompt + 1}/${
+                            prompts.length
+                        }`;
+                    }
+                };
+
+                const nextPromptBtn = document.querySelector(".next-prompt");
+                const prevPromptBtn = document.querySelector(".prev-prompt");
+
+                if (nextPromptBtn && prevPromptBtn) {
+                    nextPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt < prompts.length - 1) {
+                            currentPrompt++;
+                            updatePrompt();
+                            prevPromptBtn.disabled = false;
+                            if (currentPrompt === prompts.length - 1) {
+                                nextPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+
+                    prevPromptBtn.addEventListener("click", () => {
+                        if (currentPrompt > 0) {
+                            currentPrompt--;
+                            updatePrompt();
+                            nextPromptBtn.disabled = false;
+                            if (currentPrompt === 0) {
+                                prevPromptBtn.disabled = true;
+                            }
+                        }
+                    });
+                }
+
+                // Commitment functionality
+                const saveCommitmentBtn =
+                    document.querySelector(".save-commitment");
+                const commitmentInput =
+                    document.querySelector(".commitment-input");
+                const commitmentList =
+                    document.querySelector(".commitment-list");
+
+                if (saveCommitmentBtn && commitmentInput && commitmentList) {
+                    // Load saved commitments
+                    const savedCommitments = JSON.parse(
+                        localStorage.getItem("commitments") || "[]"
+                    );
+                    savedCommitments.forEach((commitment) => {
+                        const li = document.createElement("li");
+                        li.textContent = commitment;
+                        commitmentList.appendChild(li);
+                    });
+
+                    saveCommitmentBtn.addEventListener("click", () => {
+                        const commitment = commitmentInput.value.trim();
+                        if (commitment) {
+                            const li = document.createElement("li");
+                            li.textContent = commitment;
+                            commitmentList.appendChild(li);
+
+                            // Save to localStorage
+                            const commitments = JSON.parse(
+                                localStorage.getItem("commitments") || "[]"
+                            );
+                            commitments.push(commitment);
+                            localStorage.setItem(
+                                "commitments",
+                                JSON.stringify(commitments)
+                            );
+
+                            commitmentInput.value = "";
+                            showToast("Commitment saved! 🙏");
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>
